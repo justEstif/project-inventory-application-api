@@ -1,13 +1,14 @@
 import express from "express";
 import routes from "./routes";
+import env from "./config/env";
 
-const port = 5000;
+const { PORT } = env;
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
   routes(app);
 });
