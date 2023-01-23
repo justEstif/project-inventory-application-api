@@ -4,6 +4,7 @@ dotenv.config();
 
 const envSchema = object({
   PORT: string().transform(Number),
+  DATABASE_URL: string(),
   NODE_ENV: string(),
 });
 
