@@ -1,5 +1,5 @@
 generator client {
-  provider      = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -25,11 +25,10 @@ model Item {
   id          String    @id @default(uuid())
   name        String
   description String
-  rating      Int
   price       Int
   inStock     Int
   image       String
-  category    Category? @relation(fields: [categoryId], references: [id])
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String?   @map("categoryId")
   brand       Brand?    @relation(fields: [brandId], references: [id])
   brandId     String?   @map("brandId")

@@ -6,7 +6,6 @@ const getRandomItem = () => {
   return {
     name: faker.commerce.product(),
     description: faker.commerce.productDescription(),
-    rating: faker.datatype.number({ max: 5 }),
     price: Number(faker.commerce.price()),
     inStock: faker.datatype.number(),
     image: faker.image.business(),
