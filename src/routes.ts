@@ -1,8 +1,25 @@
-import { Express, Request, Response } from "express";
+import { Router } from "express";
+import * as categoryController from "./controller/categoryController";
+import * as itemController from "./controller/itemController";
+import validate from "./middleware/validateResource";
+import { getCategorySchema, postCategorySchema } from "./schema/categorySchema";
+import { getItemSchema } from "./schema/itemSchema";
 
-const routes = (app: Express) => {
-  app.get("/", (_: Request, res: Response) => res.sendStatus(200));
-  app.get("/checkhealth", (_: Request, res: Response) => res.sendStatus(200));
-};
+const router = Router();
 
-export default routes;
+router
+  .route("/category")
+  .get(categoryController.getResponse)
+  .post(validate(postCategorySchema), categoryController.postResponse);
+
+router
+  .route("/category/:categoryId")
+  .get(validate(getCategorySchema), categoryController.getResponseId);
+
+router
+  .route("/item/:itemId")
+  .get(validate(getItemSchema), itemController.getResponseId);
+
+router.route("/health").get((_, res) => res.sendStatus(200));
+
+export default router;
