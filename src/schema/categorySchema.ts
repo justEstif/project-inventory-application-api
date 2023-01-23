@@ -1,4 +1,5 @@
 import { object, string, TypeOf } from "zod";
+import verifyImageUrl from "../utils/verifyImageUrl";
 
 const payload = {
   body: object({
@@ -6,8 +7,12 @@ const payload = {
       required_error: "Category name is required",
     }),
     image: string({
-      required_error: "Category image is required",
-    }),
+      required_error: "Image is required",
+    })
+      .url({ message: "Image Link must be valid url " })
+      .refine(async (url) => await verifyImageUrl(url), {
+        message: "Image must link to an image only",
+      }),
   }),
 };
 
