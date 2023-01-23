@@ -1,6 +1,10 @@
 import { RequestHandler } from "express";
 import prisma from "../lib/prisma";
-import { GetCategoryInput, PostCategoryInput } from "../schema/categorySchema";
+import {
+  DeleteCategoryInput,
+  GetCategoryInput,
+  PostCategoryInput,
+} from "../schema/categorySchema";
 
 export const getResponse: RequestHandler = async (_, res) => {
   try {
@@ -43,5 +47,23 @@ export const postResponse: RequestHandler<
     res.status(201).json({ message: "Created category ", response: category });
   } catch (error) {
     res.status(400).json({ message: "Error creating category", error: error });
+  }
+};
+
+export const deleteResponseId: RequestHandler<
+  DeleteCategoryInput["params"]
+> = async (req, res) => {
+  try {
+    const category = await prisma.category.delete({
+      where: {
+        id: req.params.categoryId,
+      },
+    });
+    res.status(200).json({
+      message: "Deleted category",
+      response: category,
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Error deleting category", error: error });
   }
 };

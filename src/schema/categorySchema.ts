@@ -4,14 +4,14 @@ import verifyImageUrl from "../utils/verifyImageUrl";
 const payload = {
   body: object({
     name: string({
-      required_error: "Category name is required",
+      required_error: "category name is required",
     }),
     image: string({
-      required_error: "Image is required",
+      required_error: "image is required",
     })
-      .url({ message: "Image Link must be valid url " })
+      .url({ message: "image Link must be valid url " })
       .refine(async (url) => await verifyImageUrl(url), {
-        message: "Image must link to an image only",
+        message: "image must link to a valid image url",
       }),
   }),
 };
@@ -19,7 +19,7 @@ const payload = {
 const params = {
   params: object({
     categoryId: string({
-      required_error: "Category id is required",
+      required_error: "categoryId is required",
     }),
   }),
 };
@@ -32,5 +32,10 @@ export const postCategorySchema = object({
   ...payload,
 });
 
+export const deleteCategorySchema = object({
+  ...params,
+});
+
 export type GetCategoryInput = TypeOf<typeof getCategorySchema>;
 export type PostCategoryInput = TypeOf<typeof postCategorySchema>;
+export type DeleteCategoryInput = TypeOf<typeof deleteCategorySchema>;
