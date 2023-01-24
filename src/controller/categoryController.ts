@@ -4,6 +4,7 @@ import {
   DeleteCategoryInput,
   GetCategoryInput,
   PostCategoryInput,
+  PutCategoryInput,
 } from "../schema/categorySchema";
 
 export const getResponse: RequestHandler = async (_, res) => {
@@ -50,6 +51,24 @@ export const postResponse: RequestHandler<
   }
 };
 
+export const putResponseId: RequestHandler<
+  PutCategoryInput["params"],
+  {},
+  PutCategoryInput["body"]
+> = async (req, res) => {
+  try {
+    const category = await prisma.category.update({
+      where: { id: req.params.categoryId },
+      data: {
+        ...(req.body.name && { name: req.body.name }),
+        ...(req.body.image && { image: req.body.image }),
+      },
+    });
+    res.status(200).json({ message: "Updated category", response: category });
+  } catch (error) {
+    res.status(400).json({ message: "Error updating category", error: error });
+  }
+};
 export const deleteResponseId: RequestHandler<
   DeleteCategoryInput["params"]
 > = async (req, res) => {
