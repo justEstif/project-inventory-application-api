@@ -19,6 +19,8 @@ const payload = {
   }),
 };
 
+const partialPayload = { body: payload.body.partial() };
+
 const params = {
   params: object({
     itemId: string({
@@ -38,7 +40,7 @@ export const postItemSchema = object({
 
 export const putItemSchema = object({
   ...params,
-  ...payload,
+  ...partialPayload,
 });
 
 export const deleteItemSchema = object({

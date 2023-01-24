@@ -16,6 +16,8 @@ const payload = {
   }),
 };
 
+const partialPayload = { body: payload.body.partial() };
+
 const params = {
   params: object({
     categoryId: string({
@@ -34,7 +36,7 @@ export const postCategorySchema = object({
 
 export const putCategorySchema = object({
   ...params,
-  ...payload,
+  ...partialPayload,
 });
 
 export const deleteCategorySchema = object({
