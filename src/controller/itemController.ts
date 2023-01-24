@@ -7,32 +7,27 @@ import {
   PutItemInput,
 } from "../schema/itemSchema";
 
-export const getResponse: RequestHandler = async (_req, res) => {
+export const getResponse: RequestHandler = async (_req, res, next) => {
   try {
     const items = await prisma.item.findMany();
-    res.status(200).json({
-      message: "Item",
-      response: items,
-    });
+    res.status(200).json(items);
   } catch (error) {
-    res.status(400).json({ message: "Error getting items", error: error });
+    next(error);
   }
 };
 
 export const getResponseId: RequestHandler<GetItemInput["params"]> = async (
   req,
-  res
+  res,
+  next
 ) => {
   try {
     const item = await prisma.item.findUnique({
       where: { id: req.params.itemId },
     });
-    res.status(200).json({
-      message: "Item",
-      response: item,
-    });
+    res.status(200).json(item);
   } catch (error) {
-    res.status(400).json({ message: "Error getting item", error: error });
+    next(error);
   }
 };
 
@@ -40,7 +35,7 @@ export const postResponse: RequestHandler<
   {},
   {},
   PostItemInput["body"]
-> = async (req, res) => {
+> = async (req, res, next) => {
   try {
     const item = await prisma.item.create({
       data: {
@@ -53,12 +48,9 @@ export const postResponse: RequestHandler<
         brand: { connect: { id: req.body.brandId } },
       },
     });
-    res.status(201).json({
-      message: "Created Item",
-      response: item,
-    });
+    res.status(201).json(item);
   } catch (error) {
-    res.status(400).json({ message: "Error creating item", error: error });
+    next(error);
   }
 };
 
@@ -66,7 +58,7 @@ export const putResponseId: RequestHandler<
   PutItemInput["params"],
   {},
   PutItemInput["body"]
-> = async (req, res) => {
+> = async (req, res, next) => {
   try {
     const item = await prisma.item.update({
       where: {
@@ -86,27 +78,21 @@ export const putResponseId: RequestHandler<
         }),
       },
     });
-    res.status(200).json({
-      message: "Updated Item",
-      response: item,
-    });
+    res.status(200).json(item);
   } catch (error) {
-    res.status(400).json({ message: "Error updating item", error: error });
+    next(error);
   }
 };
 
 export const deleteResponseId: RequestHandler<
   DeleteItemInput["params"]
-> = async (req, res) => {
+> = async (req, res, next) => {
   try {
     const item = await prisma.item.delete({
       where: { id: req.params.itemId },
     });
-    res.status(200).json({
-      message: "Deleted item",
-      response: item,
-    });
+    res.status(200).json(item);
   } catch (error) {
-    res.status(400).json({ message: "Error deleting item", error: error });
+    next(error);
   }
 };
