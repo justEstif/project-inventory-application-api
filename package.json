@@ -1,8 +1,11 @@
 {
   "name": "project-inventory-application-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "description": "",
+  "license": "ISC",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "npm run migrate:deploy && tsc",
@@ -19,9 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/justEstif/project-inventory-application-api.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/justEstif/project-inventory-application-api/issues"
   },

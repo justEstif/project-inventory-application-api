@@ -30,6 +30,6 @@ model Item {
   image       String
   category    Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String?   @map("categoryId")
-  brand       Brand?    @relation(fields: [brandId], references: [id])
+  brand       Brand?    @relation(fields: [brandId], references: [id], onDelete: Cascade)
   brandId     String?   @map("brandId")
 }
