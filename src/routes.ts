@@ -21,8 +21,11 @@ import {
   postItemSchema,
   putItemSchema,
 } from "./schema/itemSchema";
+import errorHandler from "./middleware/errorHandler";
 
 const router = Router();
+
+router.get("/", categoryController.getResponse);
 
 router
   .route("/category")
@@ -57,6 +60,10 @@ router
   .put(validate(putItemSchema), itemController.putResponseId)
   .delete(validate(deleteItemSchema), itemController.deleteResponseId);
 
-router.route("/health").get((_, res) => res.sendStatus(200));
+router.route("/health").get((_, res) => {
+  res.status(200).json("OK");
+});
+
+router.use(errorHandler);
 
 export default router;
