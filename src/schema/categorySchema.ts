@@ -32,10 +32,16 @@ export const postCategorySchema = object({
   ...payload,
 });
 
+export const putCategorySchema = object({
+  ...params,
+  ...payload,
+});
+
 export const deleteCategorySchema = object({
   ...params,
 });
 
 export type GetCategoryInput = TypeOf<typeof getCategorySchema>;
 export type PostCategoryInput = TypeOf<typeof postCategorySchema>;
+export type PutCategoryInput = TypeOf<typeof putCategorySchema>;
 export type DeleteCategoryInput = TypeOf<typeof deleteCategorySchema>;
