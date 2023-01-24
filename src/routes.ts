@@ -1,7 +1,14 @@
 import { Router } from "express";
 import * as categoryController from "./controller/categoryController";
+import * as brandController from "./controller/brandController";
 import * as itemController from "./controller/itemController";
 import validate from "./middleware/validateResource";
+import {
+  deleteBrandSchema,
+  getBrandSchema,
+  postBrandSchema,
+  putBrandSchema,
+} from "./schema/brandSchema";
 import {
   deleteCategorySchema,
   getCategorySchema,
@@ -27,6 +34,17 @@ router
   .get(validate(getCategorySchema), categoryController.getResponseId)
   .put(validate(putCategorySchema), categoryController.putResponseId)
   .delete(validate(deleteCategorySchema), categoryController.deleteResponseId);
+
+router
+  .route("/brand")
+  .get(brandController.getResponse)
+  .post(validate(postBrandSchema), brandController.postResponse);
+
+router
+  .route("/brand/:brandId")
+  .get(validate(getBrandSchema), brandController.getResponseId)
+  .put(validate(putBrandSchema), brandController.putResponseId)
+  .delete(validate(deleteBrandSchema), brandController.deleteResponseId);
 
 router
   .route("/item")
